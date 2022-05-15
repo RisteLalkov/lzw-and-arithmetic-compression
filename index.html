@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/bootstrap.js"></script>
+
+    <style>
+        .container {
+            max-width: 600px;
+        }
+
+        hr {
+            opacity: 1;
+        }
+        hr.colored {
+            border: 0;
+            height: 5px;
+            background: -webkit-linear-gradient(left, rgba(196,222,138,1) 0%, rgb(182, 208, 124) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* Chrome10+,Safari5.1+ */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align:center; margin-bottom: 20px; margin-top: 20px">Мултимедиски Системи</h2>
+
+    <p>Со избор на едно од копчињата подолу, ќе бидете пренасочени кон соодветниот алгоритам за компресија.</p>
+    <h4 style="text-align:left; margin-bottom: 20px; margin-top: 20px">Упатство за LZW алгоритамот: </h4>
+    <p>Во полето за внесување, го внесувате посакуваниот String и со клик на копчето Compress, на истиот екран се прикажуват
+    вредностите со кое се копресирал тој String</p>
+
+    <h4 style="text-align:left; margin-bottom: 20px; margin-top: 20px">Упатство за Arithmetic Coding алгоритамот: </h4>
+    <p>Во првото поле се внесува посакуваниот String, а во второто поле го внесувате посакуваниот Radix, потоа при клик на
+    копчето Compress, на истиот екран се прикажива компресираниот формат на внесениот String.</p>
+    <hr class="colored"/>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <a href="lzw.html">
+                    <button type="button" class="w-100 btn btn-primary">Lempel–Ziv–Welch</button>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <a href="arithmetic.html">
+                    <button type="button" class="w-100 btn btn-primary">Arithmetic Coding</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="myDivTitle" style="display:none">
+        <h4 style="text-align:center; margin-bottom: 20px; margin-top: 20px">Compressed Format: </h4>
+    </div>
+
+    <div id="myDiv">
+
+    </div>
+
+</div>
+
+</body>
+</html>

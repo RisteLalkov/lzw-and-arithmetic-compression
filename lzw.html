@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LZW</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/bootstrap.js"></script>
+
+    <style>
+        .container {
+            max-width: 600px;
+        }
+
+        hr {
+            opacity: 1;
+        }
+        hr.colored {
+            border: 0;
+            height: 5px;
+            background: -webkit-linear-gradient(left, rgba(196,222,138,1) 0%, rgb(182, 208, 124) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* Chrome10+,Safari5.1+ */
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div class="container">
+    <h2 style="text-align:center; margin-bottom: 20px; margin-top: 20px">LZW Algorithm</h2>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <input name="input1" type="text" class="form-control form-control-sm" id="input1" placeholder="Enter String">
+            </div>
+        </div>
+    </div>
+
+    <hr class="colored"/>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <button type="button" class="w-100 btn btn-primary" onclick="fun();">Compress</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="myDivTitle" style="display:none">
+        <h4 style="text-align:center; margin-bottom: 20px; margin-top: 20px">Компресиран формат: </h4>
+    </div>
+
+    <div id="myDiv">
+
+    </div>
+
+
+    <a href="index.html">
+        <button type="button" class="w-20 btn btn-primary" style="margin-top: 200px">Назад кон почетната страна</button>
+    </a>
+</div>
+
+<script>
+    //LZW Compression/Decompression for Strings
+    function fun() {
+        document.getElementById("myDivTitle").style.display = 'block';
+        var LZW = {
+            compress: function (uncompressed) {
+                "use strict";
+                // Build the dictionary.
+                var i,
+                    dictionary = {},
+                    c,
+                    wc,
+                    w = "",
+                    result = [],
+                    dictSize = 256;
+                for (i = 0; i < 256; i += 1) {
+                    dictionary[String.fromCharCode(i)] = i;
+                }
+
+                for (i = 0; i < uncompressed.length; i += 1) {
+                    c = uncompressed.charAt(i);
+                    wc = w + c;
+                    //Do not use dictionary[wc] because javascript arrays
+                    //will return values for array['pop'], array['push'] etc
+                    // if (dictionary[wc]) {
+                    if (dictionary.hasOwnProperty(wc)) {
+                        w = wc;
+                    } else {
+                        result.push(dictionary[w]);
+                        // Add wc to the dictionary.
+                        dictionary[wc] = dictSize++;
+                        w = String(c);
+                    }
+                }
+
+                // Output the code for w.
+                if (w !== "") {
+                    result.push(dictionary[w]);
+                }
+                return result;
+            },
+
+
+            decompress: function (compressed) {
+                "use strict";
+                // Build the dictionary.
+                var i,
+                    dictionary = [],
+                    w,
+                    result,
+                    k,
+                    entry = "",
+                    dictSize = 256;
+                for (i = 0; i < 256; i += 1) {
+                    dictionary[i] = String.fromCharCode(i);
+                }
+
+                w = String.fromCharCode(compressed[0]);
+                result = w;
+                for (i = 1; i < compressed.length; i += 1) {
+                    k = compressed[i];
+                    if (dictionary[k]) {
+                        entry = dictionary[k];
+                    } else {
+                        if (k === dictSize) {
+                            entry = w + w.charAt(0);
+                        } else {
+                            return null;
+                        }
+                    }
+
+                    result += entry;
+
+                    // Add w+entry[0] to the dictionary.
+                    dictionary[dictSize++] = w + entry.charAt(0);
+
+                    w = entry;
+                }
+                return result;
+            }
+        },
+        // For Test Purposes
+            comp = LZW.compress(document.getElementById('input1').value),
+            decomp = LZW.decompress(comp);
+        //document.write(comp + '<br>' + decomp);
+
+        document.getElementById("myDiv").innerHTML =
+        comp + '<br>' + decomp;
+    }
+
+
+</script>
+</body>
+</html>
